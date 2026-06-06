@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   ATELIER — a warm, editorial dark workspace.
+   Deep espresso base · aged-paper cards · a single confident amber accent ·
+   Fraunces (display serif) + Hanken Grotesk (grotesque) + IBM Plex Arabic.
+   =========================================================================== */
+@theme {
+  /* Surfaces — warm near-blacks, not cold slate. */
+  --color-ink-950: #141109;
+  --color-ink-900: #1b1610;
+  --color-ink-850: #221c13;
+  --color-ink-800: #292117;
+  --color-ink-700: #38301f;
+  --color-ink-600: #4a3f2a;
+
+  /* Ink-on-paper text scale. */
+  --color-cream: #f5eee0;
+  --color-sand: #b6a78d;
+  --color-faint: #80735c;
+
+  /* The one sharp accent + a deeper press state. */
+  --color-accent: #f5a623;
+  --color-accent-deep: #d9870f;
+
+  /* Semantic. */
+  --color-online: #93cf72;
+  --color-overdue: #ee6a4c;
+
+  --font-display: "Fraunces", "IBM Plex Sans Arabic", Georgia, serif;
+  --font-sans: "Hanken Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-xl: 1rem;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Atmosphere: warm amber light bleeding from the top edges over espresso. */
+  background:
+    radial-gradient(1100px 620px at 8% -8%, rgba(245, 166, 35, 0.12), transparent 58%),
+    radial-gradient(900px 520px at 102% -4%, rgba(245, 166, 35, 0.06), transparent 52%),
+    radial-gradient(700px 700px at 50% 120%, rgba(217, 135, 15, 0.05), transparent 60%),
+    var(--color-ink-950);
+  background-attachment: fixed;
+}
+
+/* Fine film grain over everything — subtle warmth and texture. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Faint engraved dot-grid behind the board lanes. */
+.board-grid {
+  background-image: radial-gradient(rgba(245, 238, 224, 0.04) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: -1px -1px;
+}
+
+/* ---- Scrollbars: thin, warm, unobtrusive ---- */
+.board-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-700) transparent;
+}
+.board-scroll::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.board-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-ink-700);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+.board-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-600);
+  background-clip: padding-box;
+}
+
+/* ---- Reusable surfaces ---- */
+.surface {
+  background: linear-gradient(168deg, var(--color-ink-850), var(--color-ink-900));
+  border: 1px solid rgba(245, 238, 224, 0.08);
+}
+
+/* Aged-paper card: warm gradient + a faint top sheen. */
+.paper {
+  background:
+    linear-gradient(180deg, rgba(245, 238, 224, 0.03), transparent 38%),
+    linear-gradient(165deg, var(--color-ink-800), var(--color-ink-850));
+  border: 1px solid rgba(245, 238, 224, 0.07);
+  box-shadow: 0 1px 0 rgba(245, 238, 224, 0.04) inset, 0 8px 18px -14px rgba(0, 0, 0, 0.9);
+}
+.paper:hover {
+  border-color: rgba(245, 166, 35, 0.4);
+  box-shadow: 0 1px 0 rgba(245, 238, 224, 0.06) inset, 0 16px 30px -16px rgba(0, 0, 0, 0.95);
+  transform: translateY(-2px);
+}
+
+/* The signature amber button. */
+.btn-accent {
+  background: linear-gradient(180deg, #f7b13d, var(--color-accent));
+  color: #2a1c05;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 10px 22px -12px rgba(245, 166, 35, 0.8);
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+.btn-accent:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+.btn-accent:active {
+  transform: translateY(0);
+  filter: brightness(0.96);
+}
+
+/* Quiet ghost button. */
+.btn-ghost {
+  color: var(--color-sand);
+  border: 1px solid rgba(245, 238, 224, 0.1);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn-ghost:hover {
+  color: var(--color-cream);
+  background: rgba(245, 238, 224, 0.05);
+  border-color: rgba(245, 238, 224, 0.2);
+}
+
+/* Inputs — flush, warm, amber focus. */
+.field {
+  background: rgba(20, 17, 9, 0.6);
+  border: 1px solid rgba(245, 238, 224, 0.1);
+  color: var(--color-cream);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field::placeholder {
+  color: var(--color-faint);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.16);
+}
+
+/* Section eyebrow label. */
+.eyebrow {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  font-weight: 600;
+}
+
+/* ---- Motion ---- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(147, 207, 114, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(147, 207, 114, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(147, 207, 114, 0);
+  }
+}
+
+.enter {
+  opacity: 0;
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.pop-in {
+  animation: pop-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.live-dot {
+  animation: pulse-ring 2.2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .paper:hover {
+    transform: none;
+  }
+}
